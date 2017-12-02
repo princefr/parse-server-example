@@ -37,8 +37,9 @@ var dashboard = new ParseDashboard({
        user: process.env.UserOne,
        pass: process.env.UserOnePassword,
        apps: [{"appId": process.env.APP_ID}]
-     },
-  ]
+     }
+  ],
+  trustProxy: 1
 });
 
 // Client-keys like the javascript key or the .NET key are not necessary with parse-server
