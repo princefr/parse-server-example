@@ -23,13 +23,20 @@ var api = new ParseServer({
 });
 
 var dashboard = new ParseDashboard({
-  "apps": [
+  apps: [
     {
-      "serverURL": process.env.SERVER_URL,
-      "appId": process.env.APP_ID,
-      "masterKey": process.env.MASTER_KEY,
-      "appName": "MyApp"
+      serverURL: process.env.SERVER_URL,
+      appId: process.env.APP_ID,
+      masterKey: process.env.MASTER_KEY,
+      appName: process.env.APP_NAME
     }
+  ],
+  users: [
+       {
+       user: process.env.UserOne,
+       pass: process.env.UserOnePassword,
+       apps: [{"appId": process.env.APP_ID}]
+     },
   ]
 });
 
