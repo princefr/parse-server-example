@@ -44,7 +44,7 @@ app.use('/public', express.static(path.join(__dirname, '/public')));
 
 // Serve the Parse API on the /parse URL prefix
 var mountPath = process.env.PARSE_MOUNT || '/parse';
-var dashboardPath = process.env.PARSE_MOUNT || '/dashboard';
+var dashboardPath = process.env.DASHBOARD_MOUNT || '/dashboard';
 app.use(mountPath, api);
 app.use(dashboardPath, dashboard);
 
