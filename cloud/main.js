@@ -5,6 +5,11 @@ Parse.Cloud.define('hello', function(req, res) {
 });
 
 
+Parse.Cloud.define("createStripeCustomer", function(req, res){
+console.log(JSON.stringify(req))
+})
+
+
 
 function PayWithStripe(){
   return new Promise(function(resolve, reject){
