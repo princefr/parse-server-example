@@ -6,7 +6,11 @@ Parse.Cloud.define('hello', function(req, res) {
 
 
 Parse.Cloud.define("createStripeCustomer", function(req, res){
-console.log(JSON.stringify(req))
+  return createStripeCustomer(req.params.email).then(function(results){
+    res.success(results)
+    }, function(err){
+      res.error(err)
+  })
 })
 
 
