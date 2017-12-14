@@ -14,7 +14,8 @@
     "parse": "~1.8.0",
     "parse-server": "*",
     "parse-dashboard": "~1.1.2",
-    "stripe": "~5.3.0"
+    "stripe": "~5.3.0",
+    "geocoder": "0.2.3"
   },
   "scripts": {
     "start": "node index.js"
