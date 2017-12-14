@@ -1,8 +1,19 @@
 var stripe = require('stripe')(process.env.STRIPE_API_KEY);
+var geocoder = require('geocoder');
 
 Parse.Cloud.define('hello', function(req, res) {
   res.success('Hi');
 });
+
+Parse.Cloud.define("getlocation"", function(req, res){
+    return geocoder.geocode(req.params.adresse, function ( err, data ) {
+      if(err){
+        res.error(err)
+      }else{
+        res.success(data)
+      }
+  });               
+})
 
 
 Parse.Cloud.define("createStripeCustomer", function(req, res){
