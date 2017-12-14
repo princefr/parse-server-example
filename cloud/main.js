@@ -5,7 +5,7 @@ Parse.Cloud.define('hello', function(req, res) {
   res.success('Hi');
 });
 
-Parse.Cloud.define("getlocation"", function(req, res){
+Parse.Cloud.define("getlocation", function(req, res){
     return geocoder.geocode(req.params.adresse, function ( err, data ) {
       if(err){
         res.error(err)
