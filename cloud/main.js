@@ -27,11 +27,44 @@ Parse.Cloud.define("createStripeCustomer", function(req, res){
 
 
 
-function PayWithStripe(){
+function PayWithStripe(amount, currency, customer){
   return new Promise(function(resolve, reject){
-  
+      stripe.charges.create({
+      amount: amount,
+      currency: currency,
+      customer: customer, // obtained with Stripe.js
+      description: "Charge for joshua.thompson@example.com"
+    }, function(err, charge) {
+      if(err){
+      reject(err)
+      }else{
+      resolve(charge)
+      }
+    });
   })
 }
+
+
+Parse.Cloud.define("PayWithStripe", function(req, res){
+  var query = new Parse.Query("Ventes")
+  query.get(req.params.id).then(function(results){
+    if(results.get("Quantite") == 0){
+      res.error("il n'ya plus rien")
+    }else if(results.get("Quantite") < req.params.quantite){
+      res.error("il ne reste plus que" + " " + results.get("Quantite"))
+    }else{
+     return PayWithStripe(req.params.amount, "eur", req.params.customer).then(function(payment){
+        results.increment("Quantite", - parseInt(req.params.quantite))
+        results.increment("NotifCount", +1)
+        results.save().then(function(results){
+           res.success({object: results, payment: payment})
+        })
+      }, function(err){
+      res.error(err)
+     })
+    }
+  })
+})
 
 
 function createStripeCustomer(email){
