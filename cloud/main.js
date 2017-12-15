@@ -48,6 +48,7 @@ function PayWithStripe(amount, currency, customer){
 Parse.Cloud.define("PayWithStripe", function(req, res){
   var query = new Parse.Query("Ventes")
   query.get(req.params.id).then(function(results){
+    console.log(results)
     if(results.get("Quantite") == 0){
       res.error("il n'ya plus rien")
     }else if(results.get("Quantite") < req.params.quantite){
