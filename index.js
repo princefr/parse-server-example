@@ -29,7 +29,8 @@ var dashboard = new ParseDashboard({
       serverURL: process.env.SERVER_URL,
       appId: process.env.APP_ID,
       masterKey: process.env.MASTER_KEY,
-      appName: process.env.APP_NAME
+      appName: process.env.APP_NAME,
+      supportedPushLocales: ["en", "ru", "fr"]
     }
   ],
   users: [
