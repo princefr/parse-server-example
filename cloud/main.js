@@ -58,7 +58,7 @@ Parse.Cloud.define("PayWithStripe", function(req, res){
         results.increment("Quantite", - parseInt(req.params.quantite))
         results.increment("NotifCount", +1)
         results.save().then(function(results){
-           res.success({object: results, payment: payment})
+           res.success(payment)
         })
       }, function(err){
       res.error(err)
