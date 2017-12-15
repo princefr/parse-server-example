@@ -5,6 +5,11 @@ Parse.Cloud.define('hello', function(req, res) {
   res.success('Hi');
 });
 
+
+Parse.Cloud.job("activate_rating", function(req, status){
+  console.log("bravouuuu je suis la ")
+})
+
 Parse.Cloud.define("getlocation", function(req, res){
   console.log(req.params.adresse)
     return geocoder.geocode(req.params.adresse, function ( err, data ) {
