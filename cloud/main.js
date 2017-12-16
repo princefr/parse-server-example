@@ -420,10 +420,30 @@ function listAllConnectedAccount(limit, starting_after){
 }
 
 
-function transfertMoney(){
+function transfertMoney(amount, currency, account){
   return new Promise(function(resolve, reject){
-  
+    stripe.transfers.create({
+    amount: amount,
+    currency: currency,
+    destination: account,
+  }, function(err, transfer) {
+    if(err){
+    reject(err)
+    }else{
+      resolve(transfer)
+    }
+  });
   })
 }
+
+
+
+Parse.Cloud.define("Transfer", function(req, res){
+  return transfertMoney(req.params.amount, req.params.currency, req.params.account).then(function(results){
+    res.success(results)
+  }, function(err){
+    res.error(err)
+  })
+})
 
 
