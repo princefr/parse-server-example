@@ -17,7 +17,6 @@ function GetBalanceOfTheConnectedAccount(account){
     }else{
      resolve(balance)
     }
-  );
   })
 }
                      
