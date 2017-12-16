@@ -351,6 +351,7 @@ function deleteStripeCustomerCard(customer, card){
 
 
 function createStripeAccount(country, email, type){
+  console.log("ok i'm in the create function" + " " + country + " " + email + " " + type) 
   return new Promise(function(resolve, reject){
       stripe.accounts.create({
       type: type,
@@ -368,6 +369,7 @@ function createStripeAccount(country, email, type){
   
   
 Parse.Cloud.define("CreateStripeAccount", function(req, res){
+  console.log("ok i started in the back")
   return createStripeAccount(req.params.country, req.params.email, req.params.type).then(function(results){
     res.success(results)
   }, function(err){
