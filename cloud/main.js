@@ -352,19 +352,17 @@ function deleteStripeCustomerCard(customer, card){
 
 function createStripeAccount(country, email, type){
   console.log("ok i'm in the create function" + " " + country + " " + email + " " + type) 
-  return new Promise(function(resolve, reject){
-      stripe.accounts.create({
-      type: type,
-      country: country,
-      email: email
-    }, function(err, account) {
-      if(err){
-      reject(err)
-      }else{
-      resolve(account)
-      }
-    });
-  })
+   return new Promise(function(resolve, reject){
+       stripe.accounts.create({
+        type: type,
+        country: country,
+        email: email
+      }).then(function(results){
+        resolve(results)
+      }, function(err){
+         reject(err)
+       });
+    })
 }
   
   
