@@ -350,10 +350,10 @@ function deleteStripeCustomerCard(customer, card){
 }
 
 
-function createStripeAccount(country, email){
+function createStripeAccount(country, email, type){
   return new Promise(function(resolve, reject){
       stripe.accounts.create({
-      type: 'standard',
+      type: type,
       country: country,
       email: email
     }, function(err, account) {
@@ -365,6 +365,15 @@ function createStripeAccount(country, email){
     });
   })
 }
+  
+  
+Parse.Cloud.definfe("CreateStripeAccount", function(req, res){
+  return createStripeAccount(req.params.country, req.params.email, req.params.type).then(function(results){
+    res.success(results)
+  }, function(err){
+    res.error(err)
+  })
+})
 
 
 function deleteStripeAccount(account){
