@@ -367,7 +367,6 @@ function createStripeAccount(country, email, type){
   
   
 Parse.Cloud.define("CreateStripe", function(req, res){
-  console.log("ok i started in the back")
   return createStripeAccount(req.params.country, req.params.email, req.params.type).then(function(results){
     res.success(results)
   }, function(err){
