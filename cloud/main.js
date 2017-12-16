@@ -6,6 +6,94 @@ Parse.Cloud.define('hello', function(req, res) {
 });
 
 
+
+function GetBalanceOfTheConnectedAccount(account){
+  return new Promise(function(resolve, reject){
+   stripe.balance.retrieve({
+    stripe_account: account
+  }, function(err, balance) {
+    if(err){
+    reject(err)
+    }else{
+     resolve(balance)
+    }
+  );
+  })
+}
+                     
+Parse.Cloud.define("RetrieveBalance", function(req, res){
+  return GetBalanceOfTheConnectedAccount(req.params.account).then(function(results){
+    res.success(results)
+  }, function(err){
+    res.error(err)
+  })
+})
+
+
+
+function createExTernalAccount(account, country, account_number, currency, account_holder_name){
+  return new Promise(function(resolve, reject){
+    stripe.accounts.createExternalAccount(
+    account,
+    { external_account: {
+     object: "bank_account",
+     country: country,
+     account_number: account_number,
+     currency: currency,
+     account_holder_name: account_holder_name
+    }},
+    function(err, bank_account) {
+      if(err){
+        reject(err)
+      }else{
+        resolve(bank_account)
+      }
+    }
+  );
+  })
+}
+  
+  
+  
+  Parse.Cloud.define("createExternalAccount", function(req, res){
+    return createExTernalAccount(req.params.account, req.params.country, req.params.account_number, req.params.currency, req.params.account_holder_name).then(function(results){
+      res.success(results)
+    }, function(err){
+      res.error(err)
+    })
+  })
+  
+  
+  
+  function MakePayout(account, amount, currency){
+    return new Promise(function(resolve, reject){
+      stripe.payouts.create({
+        amount: amount,
+        currency: currency,
+      }, {
+        stripe_account: account,
+      }).then(function(payout) {
+        resolve(payout)
+      }, function(err){
+        reject(err)
+      });
+     })
+  }
+ 
+  
+ Parse.Cloud.define("MakePayout", function(req, res){
+   return MakePayout(req.params.account, req.params.amount, req.params.currency).then(function(results){
+    res.success(results)
+   }, function(err){
+    res.error(err)
+   })
+ 
+ })  
+  
+                     
+                     
+
+
 Parse.Cloud.job("activate_rating", function(req, status){
   console.log("bravouuuu je suis la ")
 })
