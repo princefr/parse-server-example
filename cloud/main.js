@@ -18,6 +18,7 @@ function GetBalanceOfTheConnectedAccount(account){
      resolve(balance)
     }
   })
+ })
 }
                      
 Parse.Cloud.define("RetrieveBalance", function(req, res){
