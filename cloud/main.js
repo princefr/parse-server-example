@@ -62,7 +62,7 @@ Parse.Cloud.define("RetrieveBalance", function(req, res){
 
 
 Parse.Cloud.define("ephemeralKeys", function(req, res) {
-    return stripe.ephemeralKeys.create({customer: req.params.customer}, {stripe_version: req.params.apiVersion, api_key: process.env.stripe_api_key}).then(function(key){
+    return stripe.ephemeralKeys.create({customer: req.params.customer}, {stripe_version: req.params.apiVersion, api_key: process.env.customer}).then(function(key){
       res.success(key)
     }).catch(function(err){
       res.error(err)
