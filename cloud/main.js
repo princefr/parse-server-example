@@ -20,13 +20,53 @@ function GetBalanceOfTheConnectedAccount(account){
   })
  })
 }
-                     
+
+
+Parse.Cloud.define("GetProduct", function(req, res){
+  res.success({title: "Nutella", barcode: data.barcode, description: "Pot de nutella de 500G", imgUrl: "https://products-images.di-static.com/image/base/9782263060632-475x500-1.jpg", price: Math.floor(10 + Math.random() * 90), quantity: 1})
+})
+
+
+Parse.Cloud.define("UpQuantityProduct", function(req, res) {
+  // description, barcode, imgUrl, price, quantity, title, createdAt, updateAt, cardID
+  var Productsquery = new Parse.Query("ProductsInCarts")
+  // status,  storeId, total, transactionID, objectID, updateAt, createdAt
+  var Cartsquery = new Parse.Query("Carts")
+  Productsquery.get(req.params.productId).then(function(products){
+    Cartsquery.get(results.get("cardID")).then(function(carts){
+
+    })
+  })
+
+})
+
+
+Parse.Cloud.define("DownQuantityProduct", function(req, res){
+  var Productsquery = new Parse.Query("Products")
+  var Cartsquery = new Parse.Query("Carts")
+  Productsquery.get(req.params.productId).then(function(products){
+    Cartsquery.get(results.get("cardID")).then(function(carts){
+
+    })
+  })
+})
+
+
 Parse.Cloud.define("RetrieveBalance", function(req, res){
   return GetBalanceOfTheConnectedAccount(req.params.account).then(function(results){
     res.success(results)
   }, function(err){
     res.error(err)
   })
+})
+
+
+Parse.Cloud.define("ephemeralKeys", function(req, res) {
+    return stripe.ephemeralKeys.create({customer: req.params.customer}, {stripe_version: req.params.apiVersion, api_key: process.env.stripe_api_key}).then(function(key){
+      res.success(key)
+    }).catch(function(err){
+      res.error(err)
+    })
 })
 
 
@@ -52,9 +92,9 @@ function createExTernalAccount(account, country, account_number, currency, accou
   );
   })
 }
-  
-  
-  
+
+
+
   Parse.Cloud.define("createExternalAccount", function(req, res){
     return createExTernalAccount(req.params.account, req.params.country, req.params.account_number, req.params.currency, req.params.account_holder_name).then(function(results){
       res.success(results)
@@ -62,9 +102,9 @@ function createExTernalAccount(account, country, account_number, currency, accou
       res.error(err)
     })
   })
-  
-  
-  
+
+
+
   function MakePayout(account, amount, currency){
     return new Promise(function(resolve, reject){
       stripe.payouts.create({
@@ -79,19 +119,19 @@ function createExTernalAccount(account, country, account_number, currency, accou
       });
      })
   }
- 
-  
+
+
  Parse.Cloud.define("MakePayout", function(req, res){
    return MakePayout(req.params.account, req.params.amount, req.params.currency).then(function(results){
     res.success(results)
    }, function(err){
     res.error(err)
    })
- 
- })  
-  
-                     
-                     
+
+ })
+
+
+
 
 
 Parse.Cloud.job("activate_rating", function(req, status){
@@ -106,7 +146,7 @@ Parse.Cloud.define("getlocation", function(req, res){
       }else{
         res.success(data)
       }
-  });               
+  });
 })
 
 
@@ -351,7 +391,7 @@ function deleteStripeCustomerCard(customer, card){
 
 
 function createStripeAccount(country, email, type){
-  console.log("ok i'm in the create function" + " " + country + " " + email + " " + type) 
+  console.log("ok i'm in the create function" + " " + country + " " + email + " " + type)
    return new Promise(function(resolve, reject){
        stripe.accounts.create({
         type: type,
@@ -364,8 +404,8 @@ function createStripeAccount(country, email, type){
        });
     })
 }
-  
-  
+
+
 Parse.Cloud.define("CreateStripe", function(req, res){
   return createStripeAccount(req.params.country, req.params.email, req.params.way).then(function(results){
     res.success(results)
@@ -445,5 +485,3 @@ Parse.Cloud.define("Transfer", function(req, res){
     res.error(err)
   })
 })
-
-
