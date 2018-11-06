@@ -23,7 +23,7 @@ function GetBalanceOfTheConnectedAccount(account){
 
 
 Parse.Cloud.define("GetProduct", function(req, res){
-  res.success({title: "Nutella", barcode: req.params.barcode, description: "Pot de nutella de 500G", imgUrl: "https://products-images.di-static.com/image/base/9782263060632-475x500-1.jpg", price: Math.floor(10 + Math.random() * 90), quantity: 1})
+  return {title: "Nutella", barcode: req.params.barcode, description: "Pot de nutella de 500G", imgUrl: "https://products-images.di-static.com/image/base/9782263060632-475x500-1.jpg", price: Math.floor(10 + Math.random() * 90), quantity: 1}
 })
 
 
