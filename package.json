@@ -13,6 +13,8 @@
     "kerberos": "~0.0.x",
     "parse": "~1.8.0",
     "parse-server": "*",
+    "winston": "3.3.3",
+    "winston-daily-rotate-file": "4.5.0",
     "parse-dashboard": "~1.1.2",
     "stripe": "~6.13.0",
     "geocoder": "0.2.3"
