@@ -19,7 +19,7 @@
     "graphql-list-fields": "2.0.2",
     "graphql-relay": "0.6.0",
     "graphql-upload": "11.0.0",
-    "parse-server": "*",
+    "parse-server": "https://github.com/princefr/kookers",
     "winston": "3.3.3",
     "winston-daily-rotate-file": "4.5.0",
     "parse-dashboard": "~1.1.2",
